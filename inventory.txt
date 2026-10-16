@@ -1,0 +1,6 @@
+NEO Brushless Motor|Motors|8
+SPARK MAX|Electronics|6
+Swerve Wheel|Drivetrain|12
+CANcoder|Sensors|3
+Aluminum Extrusion|Structural|15
+Talon FX|Electronics|2
