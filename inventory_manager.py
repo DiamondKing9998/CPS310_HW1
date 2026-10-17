@@ -81,12 +81,63 @@ def add_item(inventory):
     display_menu()
 # 3. Update an Item Quantity function
 def update_item_quantity():
-    print("Updating item quantity... (Functionality not yet implemented)")
+    if not inventory:
+        print("No inventory items found. Please add items first.")
+        display_menu()
+        return
+    else:
+        print("======== FRC INVENTORY ========")
+        rowNumber = 0
+        for item, data in inventory.items():
+            rowNumber += 1
+            print(f"{rowNumber}. {data['item']} | {data['category']} | {data['quantity']}")
+
+        print("===============================")
+        quantityChoice = int(input("Enter the number of the item you want to update: "))
+
+        if quantityChoice < 1 or quantityChoice > len(inventory):
+            print("Invalid item number. Please try again.")
+            update_item_quantity()
+            return
+        else:
+            item_to_update = list(inventory.keys())[quantityChoice - 1]
+            new_quantity = int(input(f"Enter the new quantity for '{item_to_update}': "))
+            if new_quantity < 0:
+                print("Item quantity cannot be negative. Please try again.")
+                update_item_quantity()
+                return
+            inventory[item_to_update]["quantity"] = new_quantity
+            print(f"Quantity for '{item_to_update}' updated to {new_quantity}.")
+
+            save_inventory(inventoryFile, inventory)
 
     display_menu()
 # 4. Remove an Item function
 def remove_item():
-    print("Removing an item... (Functionality not yet implemented)")
+    if not inventory:
+        print("No inventory items found. Please add items first.")
+        display_menu()
+        return
+    else:
+        print("======== FRC INVENTORY ========")
+        rowNumber = 0
+        for item, data in inventory.items():
+            rowNumber += 1
+            print(f"{rowNumber}. {data['item']} | {data['category']} | {data['quantity']}")
+
+        print("===============================")
+        quantityChoice = int(input("Enter the number of the item you want to remove: "))
+
+        if quantityChoice < 1 or quantityChoice > len(inventory):
+            print("Invalid item number. Please try again.")
+            remove_item()
+            return
+        else:
+            item_to_remove = list(inventory.keys())[quantityChoice - 1]
+            del inventory[item_to_remove]
+            print(f"Item '{item_to_remove}' removed from inventory.")
+
+            save_inventory(inventoryFile, inventory)
 
     display_menu()
 # 5. Search Inventory function
@@ -115,6 +166,11 @@ def load_inventory(filename):
     except FileNotFoundError:
         print(f"File {filename} not found. Starting with an empty inventory.")
     return inventory
+
+def save_inventory(filename, inventory):
+    with open((filename + ".txt"), "w", encoding="utf-8") as file:
+        for item, data in inventory.items():
+            file.write(f"{data['item']}|{data['category']}|{data['quantity']}\n")
 
 
 # Program runtime loop
