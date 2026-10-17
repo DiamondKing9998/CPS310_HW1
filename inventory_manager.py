@@ -25,7 +25,7 @@ def display_menu():
     elif choice == '5':
         search_inventory()
     elif choice == '6':
-        view_inventory_summary()
+        display_summary(inventory)
     elif choice == '7':
         exit_program()
     else:
@@ -154,8 +154,34 @@ def search_inventory():
 
     display_menu()
 # 6. View Inventory Summary function
-def view_inventory_summary():
-    print("Viewing inventory summary... (Functionality not yet implemented)")
+def display_summary(inventory):
+    uniqueItems = len(inventory)
+    totalQuantity = 0
+    lowStockItems = 0
+    categoryCounts = {}
+    categoryNames = {}
+
+    for item, data in inventory.items():
+        totalQuantity += data['quantity']
+        if data['quantity'] < 5:
+            lowStockItems += 1
+
+        categoryKey = data['category'].lower()
+        if categoryKey not in categoryCounts:
+            categoryCounts[categoryKey] = 0
+            categoryNames[categoryKey] = data['category']
+        categoryCounts[categoryKey] += 1
+
+    print("====== INVENTORY SUMMARY ======")
+    print(f"Unique items: {uniqueItems}")
+    print(f"Total quantity: {totalQuantity}")
+    print(f"Low-stock items (below 5): {lowStockItems}")
+    print("Items by category:")
+    if categoryCounts:
+        for categoryKey, count in categoryCounts.items():
+            print(f" - {categoryNames[categoryKey]}: {count}")
+    else:
+        print(" - No categories found.")
 
     display_menu()
 # 7. Exit function
