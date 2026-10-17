@@ -3,3 +3,4 @@ SPARK MAX|Electronics|6
 Swerve Wheel|Drivetrain|12
 CANcoder|Sensors|3
 Talon FX|Electronics|2
+Kraken X60 Motor|Motors|4
