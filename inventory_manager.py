@@ -142,7 +142,15 @@ def remove_item():
     display_menu()
 # 5. Search Inventory function
 def search_inventory():
-    print("Searching inventory... (Functionality not yet implemented)")
+    search_term = input("Enter the name or category to search for: ").lower()
+    found_items = {item: data for item, data in inventory.items() if search_term in item.lower() or search_term in data['category'].lower()}
+
+    if found_items:
+        print("Found items:")
+        for item, data in found_items.items():
+            print(f" - {data['item']} | {data['category']} | {data['quantity']}")
+    else:
+        print("No items found matching the search criteria.")
 
     display_menu()
 # 6. View Inventory Summary function
